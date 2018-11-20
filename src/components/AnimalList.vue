@@ -6,6 +6,7 @@
                 <td>Spicies</td>
                 <td>Name</td>
                 <td>Date Of Birth</td>
+                
             </thead>
             <tbody>
                 <tr v-for="(animal, index) in animals" :key="index">
@@ -13,7 +14,9 @@
                     <td>{{animal.name}}</td>
                     <td v-if="animal.dateOfBirth !== ''">{{animal.dateOfBirth}}</td>
                     <td v-if="animal.dateOfBirth === ''">'Nepoznat'</td>
-                    
+                    <td>
+                    <button @click="removeAnimal(animal)">Remove</button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -37,7 +40,10 @@ export default {
 
     },
     methods: {
-
+        removeAnimal(animal) {
+            let index = this.animals.indexOf(animal);
+            this.animals.splice(index, 1);
+        }
     }
 }
 </script>
