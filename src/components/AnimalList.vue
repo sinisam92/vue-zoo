@@ -1,5 +1,14 @@
 <template >
     <div>
+        <form @submit.prevent="addAnimal">
+            <label>Spicies</label>
+            <input v-model="newAnimal.spicies" placeholder="Spicies">
+            <label>Name</label>
+            <input v-model="newAnimal.name" placeholder="Name">
+            <label>Date Of Birth</label>
+            <input v-model="newAnimal.dateOfBirth" placeholder="DAte Of Birth">
+            <button type="submit">Add Animal</button>
+        </form>
         <h3>Sve zivotinje</h3>
         <table border="1"   >
             <thead>
@@ -15,10 +24,10 @@
                     <td v-if="animal.dateOfBirth !== ''">{{animal.dateOfBirth}}</td>
                     <td v-if="animal.dateOfBirth === ''">'Nepoznat'</td>
                     <td>
-                    <button @click="removeAnimal(animal)">Remove</button>
+                    <button @click="removeAnimal(animal)" type="submit">Remove</button>
                     </td>
                     <td>
-                    <button @click="moveToTop(animal)">Move to top</button>
+                    <button @click="moveToTop(animal)" type="submit">Move to top</button>
                     </td>
                 </tr>
             </tbody>
@@ -30,6 +39,11 @@
 export default {
     data() {
         return {
+            newAnimal: {
+                spicies: '',
+                name: '',
+                dateOfBirth: ''
+            },
             animals: [
                 {spicies: 'Sisar', name: 'Spajk', dateOfBirth: '10 05 2006'},
                 {spicies: 'Glodar', name: 'Misko', dateOfBirth: '11 06 2007'},
@@ -51,9 +65,10 @@ export default {
             let index = this.animals.indexOf(animal);
             this.animals.splice(index, 1);
             this.animals.unshift(animal);
-            
-
-    
+        },
+        addAnimal() {
+            this.animals.push(this.newAnimal);
+            this.newAnimal = {};
         }
     }
 }
