@@ -1,13 +1,21 @@
 <template >
     <div>
+        
         <form @submit.prevent="addAnimal">
-            <label>Spicies</label>
-            <input v-model="newAnimal.spicies" placeholder="Spicies">
-            <label>Name</label>
-            <input v-model="newAnimal.name" placeholder="Name">
-            <label>Date Of Birth</label>
-            <input v-model="newAnimal.dateOfBirth" placeholder="DAte Of Birth">
-            <button type="submit">Add Animal</button>
+            <label>Spicies</label><br>
+            <input v-model="newAnimal.spicies" placeholder="Spicies"><br>
+            <label>Name</label><br>
+            <input v-model="newAnimal.name" placeholder="Name"><br>
+            <label>Date Of Birth</label><br>
+            <input v-model="newAnimal.dateOfBirth" placeholder="DAte Of Birth"><br>
+
+            <select v-model="newAnimal.sector">
+                <option disabled value="">Please select one</option>
+                <option v-for="(sector, index) in sectors" :key="index" :value="sector">{{sector.name}}</option>
+             
+            </select>
+            
+            <button type="submit" class="btn btn-primary">Add Animal</button><br>
         </form>
         <h3>Sve zivotinje</h3>
         <table border="1"   >
@@ -15,6 +23,7 @@
                 <td>Spicies</td>
                 <td>Name</td>
                 <td>Date Of Birth</td>
+                <td>Sector</td>
                 
             </thead>
             <tbody>
@@ -23,6 +32,7 @@
                     <td>{{animal.name}}</td>
                     <td v-if="animal.dateOfBirth !== ''">{{animal.dateOfBirth}}</td>
                     <td v-if="animal.dateOfBirth === ''">'Nepoznat'</td>
+                    <td>{{animal.sector.name}}</td>
                     <td>
                     <button @click="removeAnimal(animal)" type="submit">Remove</button>
                     </td>
@@ -36,21 +46,24 @@
 </template>
 
 <script>
+const sectors = [
+    {name:'Water-animals', surface: 'Water'},
+    {name:'Air-animals', surface: 'Air'},
+    {name:'Dinosaurusi', surface: 'All-around'}
+    
+]
 export default {
     data() {
         return {
-            newAnimal: {
-                spicies: '',
-                name: '',
-                dateOfBirth: ''
-            },
+            sectors: sectors,
+            newAnimal: {},
             animals: [
-                {spicies: 'Sisar', name: 'Spajk', dateOfBirth: '10 05 2006'},
-                {spicies: 'Glodar', name: 'Misko', dateOfBirth: '11 06 2007'},
-                {spicies: 'Vodozemac', name: 'Zabra', dateOfBirth: '12 07 2007'},
-                {spicies: 'Dinosaurus', name: 'Perodaktil', dateOfBirth: '10 05 2006'},
-                {spicies: 'Sisar', name: 'Sinisa', dateOfBirth: '16 08 2016'},
-                {spicies: 'Komsija', name: 'Dejan', dateOfBirth: ''}
+                {spicies: 'Sisar', name: 'Spajk', dateOfBirth: '10 05 2006', sector:sectors[0]},
+                {spicies: 'Glodar', name: 'Misko', dateOfBirth: '11 06 2007', sector:sectors[1]},
+                {spicies: 'Vodozemac', name: 'Zabra', dateOfBirth: '12 07 2007', sector:sectors[0]},
+                {spicies: 'Dinosaurus', name: 'Perodaktil', dateOfBirth: '10 05 2006', sector:sectors[2]},
+                {spicies: 'Sisar', name: 'Sinisa', dateOfBirth: '16 08 2016', sector:sectors[1]},
+                {spicies: 'Komsija', name: 'Dejan', dateOfBirth: '', sector:sectors[0]}
             ]
             
         }
@@ -67,6 +80,8 @@ export default {
             this.animals.unshift(animal);
         },
         addAnimal() {
+            console.log(this.newAnimal);
+            
             this.animals.push(this.newAnimal);
             this.newAnimal = {};
         }
