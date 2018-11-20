@@ -1,7 +1,7 @@
 <template >
-    <div>
+    <div class="container">
         
-        <form @submit.prevent="addAnimal">
+        <form @submit.prevent="addAnimal" class="form-group">
             <label>Spicies</label><br>
             <input v-model="newAnimal.spicies" placeholder="Spicies"><br>
             <label>Name</label><br>
@@ -9,8 +9,8 @@
             <label>Date Of Birth</label><br>
             <input v-model="newAnimal.dateOfBirth" placeholder="DAte Of Birth"><br>
 
-            <select v-model="newAnimal.sector">
-                <option disabled value="">Please select one</option>
+            <select v-model="newAnimal.sector"><br>
+                <option disabled value="">Please select one</option><br>
                 <option v-for="(sector, index) in sectors" :key="index" :value="sector">{{sector.name}}</option>
              
             </select>
@@ -18,7 +18,7 @@
             <button type="submit" class="btn btn-primary">Add Animal</button><br>
         </form>
         <h3>Sve zivotinje</h3>
-        <table border="1"   >
+        <table border="1">
             <thead>
                 <td>Spicies</td>
                 <td>Name</td>
@@ -30,8 +30,8 @@
                 <tr v-for="(animal, index) in animals" :key="index">
                     <td>{{animal.spicies}}</td>
                     <td>{{animal.name}}</td>
-                    <td v-if="animal.dateOfBirth !== ''">{{animal.dateOfBirth}}</td>
-                    <td v-if="animal.dateOfBirth === ''">'Nepoznat'</td>
+                    <td v-if="animal.dateOfBirth">{{animal.dateOfBirth}}</td>
+                    <td v-if="!animal.dateOfBirth">'Nepoznat'</td>
                     <td>{{animal.sector.name}}</td>
                     <td>
                     <button @click="removeAnimal(animal)" type="submit">Remove</button>
@@ -98,7 +98,7 @@ export default {
             console.log(this.newAnimal);
             
             this.animals.push(this.newAnimal);
-            this.newAnimal = {};
+            this.newAnimal = {dateOfBirth: ''};
         },
         showAnimals(sector) {
             let animals = [];
