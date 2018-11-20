@@ -42,6 +42,21 @@
                 </tr>
             </tbody>
         </table>
+        <table border="1">
+            <thead>
+                <td>Name</td>
+                <td>Surface</td>
+            </thead>
+            <tbody>
+                <tr v-for="(sector, index) in sectors" :key="index">
+                    <td>{{sector.name}}</td>
+                    <td>{{sector.surface}}</td>
+                    <td>
+                        <button @click="showAnimals(sector)" type="submit">Vidi Zivotinje</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -84,6 +99,18 @@ export default {
             
             this.animals.push(this.newAnimal);
             this.newAnimal = {};
+        },
+        showAnimals(sector) {
+            let animals = [];
+           this.animals.forEach((currentAnimal) => {
+            if(currentAnimal.sector == sector){
+
+                    animals.push(currentAnimal.name);  
+               }    
+                
+           });
+           alert(animals);  
+          
         }
     }
 }
